@@ -1,11 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { Item } from "../types";
-import { fetchItems } from "../api";
+import { fetchItems, addItem } from "../api";
+import { toast } from "sonner";
 
 interface InventoryContextType {
   items: Item[];
   loading: boolean;
   error: string | null;
+  addItem: (item: Item) => Promise<void>;
 }
 
 const InventoryContext = createContext<InventoryContextType | undefined>(
@@ -39,12 +41,25 @@ export const InventoryProvider: React.FC<{ children: React.ReactNode }> = ({
       });
   }, []);
 
+  const addItemToInventory = async (item: Item) => {
+    try {
+      const response = await addItem(item);
+      const newItem = response.data;
+
+      setItems((prevItems) => [...prevItems, newItem]);
+      toast.success("Item added successfully");
+    } catch (err) {
+      toast.error("Failed to add item");
+    }
+  };
+
   return (
     <InventoryContext.Provider
       value={{
         items,
         loading,
         error,
+        addItem: addItemToInventory,
       }}
     >
       {children}

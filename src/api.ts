@@ -19,3 +19,13 @@ export const fetchItems = async (): Promise<Item[]> => {
     throw new Error("Failed to Fetch Items");
   }
 };
+
+export const addItem = async (item: Item): Promise<Item> => {
+  try {
+    const response = await axios.post(`${API_URL}/items`, item);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+    throw new Error("Failed to Add Item");
+  }
+};
