@@ -1,0 +1,12 @@
+html,
+body {
+  @apply h-full m-0 p-0;
+}
+
+body {
+  @apply bg-gray-100 text-gray-900;
+}
+
+#root {
+  @apply h-full;
+}

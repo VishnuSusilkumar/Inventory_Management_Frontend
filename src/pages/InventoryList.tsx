@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { useInventory } from "../context/InventoryContext";
-import { useEffect } from "react";
+import { useState } from "react";
+import { toast } from "sonner";
+import Modal from "../components/Modal";
 
 const InventoryList = () => {
-  const { items, loading, error } = useInventory();
-
-  useEffect(() => {
-    console.log("Current items:", items);
-  }, [items]);
+  const { items, loading, error, deleteItem } = useInventory();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState<string | null>(null);
 
   if (loading)
     return (
@@ -15,6 +15,28 @@ const InventoryList = () => {
     );
   if (error)
     return <div className="text-red-500">An error occurred: {error}</div>;
+
+  const handleDeleteClick = (id: string) => {
+    setItemToDelete(id);
+    setIsModalOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (itemToDelete) {
+      try {
+        await deleteItem(itemToDelete);
+        setIsModalOpen(false);
+        setItemToDelete(null);
+      } catch (err) {
+        toast.error("Failed to delete the item. Please try again.");
+      }
+    }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setItemToDelete(null);
+  };
 
   return (
     <div className="space-y-6">
@@ -68,7 +90,10 @@ const InventoryList = () => {
                   >
                     Edit
                   </Link>
-                  <button className="text-red-600 hover:text-red-900">
+                  <button
+                    onClick={() => item._id && handleDeleteClick(item._id)}
+                    className="text-red-600 hover:text-red-900"
+                  >
                     Delete
                   </button>
                 </td>
@@ -77,6 +102,13 @@ const InventoryList = () => {
           </tbody>
         </table>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onConfirm={handleDeleteConfirm}
+        title="Confirm Delete"
+        message="Are you sure you want to delete this item?"
+      />
     </div>
   );
 };

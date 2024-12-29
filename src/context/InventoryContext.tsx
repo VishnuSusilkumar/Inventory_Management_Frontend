@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { Item } from "../types";
-import { fetchItems, addItem, updateItem } from "../api";
+import { fetchItems, addItem, updateItem, deleteItem } from "../api";
 import { toast } from "sonner";
 
 interface InventoryContextType {
@@ -9,6 +9,7 @@ interface InventoryContextType {
   error: string | null;
   addItem: (item: Item) => Promise<void>;
   updateItem: (item: Item) => Promise<void>;
+  deleteItem: (id: string) => Promise<void>;
 }
 
 const InventoryContext = createContext<InventoryContextType | undefined>(
@@ -67,6 +68,16 @@ export const InventoryProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const deleteItemFromInventory = async (id: string) => {
+    try {
+      await deleteItem(id);
+      setItems((prevItems) => prevItems.filter((item) => item._id !== id));
+      toast.success("Item deleted successfully");
+    } catch (err) {
+      toast.error("Failed to delete item");
+    }
+  };
+
   return (
     <InventoryContext.Provider
       value={{
@@ -75,6 +86,7 @@ export const InventoryProvider: React.FC<{ children: React.ReactNode }> = ({
         error,
         addItem: addItemToInventory,
         updateItem: updateItemInInventory,
+        deleteItem: deleteItemFromInventory,
       }}
     >
       {children}

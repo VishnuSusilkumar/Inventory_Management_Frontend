@@ -6,6 +6,7 @@ import EditItem from "./pages/EditItem";
 import ViewItem from "./pages/ViewItem";
 import InventoryList from "./pages/InventoryList";
 import { Toaster } from "sonner";
+import './styles/globals.css';
 
 function App() {
   return (

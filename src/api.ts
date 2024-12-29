@@ -49,3 +49,11 @@ export const fetchItem = async (id: string): Promise<Item> => {
     throw new Error("Failed to Fetch Item");
   }
 };
+
+export const deleteItem = async (id: string): Promise<void> => {
+  try {
+    await axios.delete(`${API_URL}/items/${id}`);
+  } catch (error) {
+    handleError(error);
+  }
+};
