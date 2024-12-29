@@ -5,7 +5,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 const handleError = (error: any) => {
   if (axios.isAxiosError(error)) {
-    throw new Error(error.response?.data.message || "An error occurred");
+    console.error(error.response?.data.message);
   }
   throw error;
 };

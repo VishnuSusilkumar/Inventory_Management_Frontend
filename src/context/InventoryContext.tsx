@@ -50,11 +50,10 @@ export const InventoryProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       const response = await addItem(item);
       const newItem = response.data;
-
       setItems((prevItems) => [...prevItems, newItem]);
       toast.success("Item added successfully");
-    } catch (err) {
-      toast.error("Failed to add item");
+    } catch (err: any) {
+      toast.error(err.response.data.error);
     }
   };
 
@@ -66,8 +65,8 @@ export const InventoryProvider: React.FC<{ children: React.ReactNode }> = ({
         prevItems.map((i) => (i._id === updatedItem._id ? updatedItem : i))
       );
       toast.success("Item updated successfully");
-    } catch (err) {
-      toast.error("Failed to update item");
+    } catch (err: any) {
+      toast.error(err.response.data.error);
     }
   };
 
@@ -76,13 +75,16 @@ export const InventoryProvider: React.FC<{ children: React.ReactNode }> = ({
       await deleteItem(id);
       setItems((prevItems) => prevItems.filter((item) => item._id !== id));
       toast.success("Item deleted successfully");
-    } catch (err) {
-      toast.error("Failed to delete item");
+    } catch (err: any) {
+      toast.error(err.response.data.error);
     }
   };
 
   const totalItems = items.length;
-  const totalValue = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalValue = items.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
   const lowStockItems = items.filter((item) => item.quantity < 10).length;
 
   return (
