@@ -63,7 +63,7 @@ const InventoryList = () => {
                     View
                   </Link>
                   <Link
-                    to={`/`}
+                    to={`/edit/${item._id}`}
                     className="text-green-600 hover:text-green-900 mr-2"
                   >
                     Edit

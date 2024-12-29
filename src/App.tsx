@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { InventoryProvider } from "./context/InventoryContext";
 import Header from "./components/Header";
 import AddItem from "./pages/AddItem";
+import EditItem from "./pages/EditItem";
 import InventoryList from "./pages/InventoryList";
 import { Toaster } from "sonner";
 
@@ -15,6 +16,7 @@ function App() {
             <Routes>
               <Route path="/" element={<InventoryList />} />
               <Route path="/add" element={<AddItem />} />
+              <Route path="/edit/:id" element={<EditItem />} />
             </Routes>
           </main>
           <Toaster />

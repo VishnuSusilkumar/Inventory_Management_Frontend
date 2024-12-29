@@ -29,3 +29,13 @@ export const addItem = async (item: Item): Promise<Item> => {
     throw new Error("Failed to Add Item");
   }
 };
+
+export const updateItem = async (item: Item): Promise<Item> => {
+  try {
+    const response = await axios.put(`${API_URL}/items/${item._id}`, item);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+    throw new Error("Failed to Update Item");
+  }
+};

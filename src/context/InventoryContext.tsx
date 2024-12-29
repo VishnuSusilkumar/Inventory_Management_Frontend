@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { Item } from "../types";
-import { fetchItems, addItem } from "../api";
+import { fetchItems, addItem, updateItem } from "../api";
 import { toast } from "sonner";
 
 interface InventoryContextType {
@@ -8,6 +8,7 @@ interface InventoryContextType {
   loading: boolean;
   error: string | null;
   addItem: (item: Item) => Promise<void>;
+  updateItem: (item: Item) => Promise<void>;
 }
 
 const InventoryContext = createContext<InventoryContextType | undefined>(
@@ -53,6 +54,19 @@ export const InventoryProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const updateItemInInventory = async (item: Item) => {
+    try {
+      const response = await updateItem(item);
+      const updatedItem = response.data;
+      setItems((prevItems) =>
+        prevItems.map((i) => (i._id === updatedItem._id ? updatedItem : i))
+      );
+      toast.success("Item updated successfully");
+    } catch (err) {
+      toast.error("Failed to update item");
+    }
+  };
+
   return (
     <InventoryContext.Provider
       value={{
@@ -60,6 +74,7 @@ export const InventoryProvider: React.FC<{ children: React.ReactNode }> = ({
         loading,
         error,
         addItem: addItemToInventory,
+        updateItem: updateItemInInventory,
       }}
     >
       {children}
