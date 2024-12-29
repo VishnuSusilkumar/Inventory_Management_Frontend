@@ -57,7 +57,7 @@ const InventoryList = () => {
                 <td className="px-6 py-4 whitespace-nowrap">{item.category}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <Link
-                    to={`/`}
+                    to={`/view/${item._id}`}
                     className="text-blue-600 hover:text-blue-900 mr-2"
                   >
                     View

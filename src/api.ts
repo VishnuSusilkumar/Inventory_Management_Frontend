@@ -39,3 +39,13 @@ export const updateItem = async (item: Item): Promise<Item> => {
     throw new Error("Failed to Update Item");
   }
 };
+
+export const fetchItem = async (id: string): Promise<Item> => {
+  try {
+    const response = await axios.get(`${API_URL}/items/${id}`);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+    throw new Error("Failed to Fetch Item");
+  }
+};

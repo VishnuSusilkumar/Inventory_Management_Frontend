@@ -3,6 +3,7 @@ import { InventoryProvider } from "./context/InventoryContext";
 import Header from "./components/Header";
 import AddItem from "./pages/AddItem";
 import EditItem from "./pages/EditItem";
+import ViewItem from "./pages/ViewItem";
 import InventoryList from "./pages/InventoryList";
 import { Toaster } from "sonner";
 
@@ -17,6 +18,7 @@ function App() {
               <Route path="/" element={<InventoryList />} />
               <Route path="/add" element={<AddItem />} />
               <Route path="/edit/:id" element={<EditItem />} />
+              <Route path="/view/:id" element={<ViewItem />} />
             </Routes>
           </main>
           <Toaster />
