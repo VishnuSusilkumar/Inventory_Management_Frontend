@@ -4,6 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import Modal from "../components/Modal";
 import Pagination from "../components/Pagination";
+import Loader from "../components/Loader";
 
 const InventoryList = () => {
   const { items, loading, error, deleteItem } = useInventory();
@@ -12,10 +13,7 @@ const InventoryList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
 
-  if (loading)
-    return (
-      <div className="flex justify-center items-center h-64">Loading...</div>
-    );
+  if (loading) return <Loader />;
   if (error)
     return <div className="text-red-500">An error occurred: {error}</div>;
 
