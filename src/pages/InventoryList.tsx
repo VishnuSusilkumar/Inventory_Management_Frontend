@@ -3,11 +3,14 @@ import { useInventory } from "../context/InventoryContext";
 import { useState } from "react";
 import { toast } from "sonner";
 import Modal from "../components/Modal";
+import Pagination from "../components/Pagination";
 
 const InventoryList = () => {
   const { items, loading, error, deleteItem } = useInventory();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 7;
 
   if (loading)
     return (
@@ -16,6 +19,7 @@ const InventoryList = () => {
   if (error)
     return <div className="text-red-500">An error occurred: {error}</div>;
 
+  //Delete Logic
   const handleDeleteClick = (id: string) => {
     setItemToDelete(id);
     setIsModalOpen(true);
@@ -37,6 +41,12 @@ const InventoryList = () => {
     setIsModalOpen(false);
     setItemToDelete(null);
   };
+
+  // Pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(items.length / itemsPerPage);
 
   return (
     <div className="space-y-6">
@@ -71,11 +81,13 @@ const InventoryList = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {items.map((item) => (
+            {currentItems.map((item) => (
               <tr key={item._id}>
                 <td className="px-6 py-4 whitespace-nowrap">{item.itemName}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{item.quantity}</td>
-                <td className="px-6 py-4 whitespace-nowrap">${item.price}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  ${item.price.toFixed(2)}
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap">{item.category}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <Link
@@ -102,6 +114,11 @@ const InventoryList = () => {
           </tbody>
         </table>
       </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
       <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
