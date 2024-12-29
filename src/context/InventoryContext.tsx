@@ -10,6 +10,9 @@ interface InventoryContextType {
   addItem: (item: Item) => Promise<void>;
   updateItem: (item: Item) => Promise<void>;
   deleteItem: (id: string) => Promise<void>;
+  totalItems: number;
+  totalValue: number;
+  lowStockItems: number;
 }
 
 const InventoryContext = createContext<InventoryContextType | undefined>(
@@ -78,6 +81,10 @@ export const InventoryProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const totalItems = items.length;
+  const totalValue = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const lowStockItems = items.filter((item) => item.quantity < 10).length;
+
   return (
     <InventoryContext.Provider
       value={{
@@ -87,6 +94,9 @@ export const InventoryProvider: React.FC<{ children: React.ReactNode }> = ({
         addItem: addItemToInventory,
         updateItem: updateItemInInventory,
         deleteItem: deleteItemFromInventory,
+        totalItems,
+        totalValue,
+        lowStockItems,
       }}
     >
       {children}
