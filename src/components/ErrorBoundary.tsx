@@ -1,4 +1,5 @@
 import { Component, ErrorInfo, ReactNode } from "react";
+import { RefreshCcw } from "lucide-react";
 
 interface Props {
   children: ReactNode;
@@ -24,7 +25,7 @@ class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-white p-4">
           <svg
             className="w-64 h-64 mb-8"
             viewBox="0 0 200 200"
@@ -35,27 +36,28 @@ class ErrorBoundary extends Component<Props, State> {
               cx="100"
               cy="100"
               r="96"
-              fill="#FEE2E2"
-              stroke="#EF4444"
+              fill="#F3F4F6"
+              stroke="#111827"
               strokeWidth="8"
             />
             <path
               d="M60 60L140 140M140 60L60 140"
-              stroke="#EF4444"
+              stroke="#111827"
               strokeWidth="12"
               strokeLinecap="round"
             />
           </svg>
-          <h1 className="text-4xl font-bold text-red-600 mb-4">
+          <h1 className="text-4xl font-bold text-black mb-4">
             Oops! Something went wrong.
           </h1>
           <p className="text-xl text-gray-600 mb-8 text-center">
             We're sorry for the inconvenience. Please try again later.
           </p>
           <button
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors"
+            className="bg-black text-white font-bold py-2 px-4 rounded transition-colors hover:bg-gray-800 flex items-center"
             onClick={() => this.setState({ hasError: false })}
           >
+            <RefreshCcw size={20} className="mr-2" />
             Try again
           </button>
         </div>
