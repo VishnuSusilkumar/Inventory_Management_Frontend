@@ -1,4 +1,4 @@
-# Inventory WhizLabs
+# Inventory Management System
 ## Introduction
 *The Inventory Management System* is a streamlined application designed to efficiently manage inventory operations. It enables users to perform CRUD (Create, Read, Update, Delete) operations on inventory items while providing an intuitive user interface and robust backend support. The system is built with a clean architecture and emphasizes modularity for scalability and maintainability.
 
