@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface ModalProps {
   isOpen: boolean;
@@ -8,7 +8,13 @@ interface ModalProps {
   message: string;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onConfirm, title, message }) => {
+const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  onConfirm,
+  title,
+  message,
+}) => {
   if (!isOpen) return null;
 
   return (
@@ -19,13 +25,13 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onConfirm, title, messag
         <div className="flex justify-end space-x-4">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition-colors"
+            className="px-4 py-2 bg-gray-200 text-black rounded hover:bg-gray-300 transition-colors"
           >
             Cancel
           </button>
           <button
             onClick={onConfirm}
-            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+            className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition-colors"
           >
             Delete
           </button>
@@ -36,4 +42,3 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onConfirm, title, messag
 };
 
 export default Modal;
-

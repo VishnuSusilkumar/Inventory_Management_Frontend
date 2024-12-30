@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useInventory } from "../context/InventoryContext";
 import { useEffect, useState } from "react";
 import { Item } from "../types";
+import { ArrowLeft, Edit } from "lucide-react";
 
 const ViewItem = () => {
   const { id } = useParams<{ id: string }>();
@@ -24,37 +25,43 @@ const ViewItem = () => {
     );
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <button
-        onClick={() => navigate(-1)}
-        className="mb-4 text-blue-500 hover:underline"
-      >
-        &larr; Back
-      </button>
-      <div className="bg-white shadow rounded-lg p-6">
-        <h1 className="text-3xl font-bold mb-4">{item.itemName}</h1>
+    <div className="max-w-2xl mx-auto mt-8">
+      <h1 className="text-3xl font-bold mb-4 text-center text-black">
+        {item.itemName}
+      </h1>
+      <div className="mb-6">
+        <button
+          onClick={() => navigate(-1)}
+          className="text-black hover:text-gray-600 flex items-center"
+        >
+          <ArrowLeft size={20} className="mr-2" />
+          Back
+        </button>
+      </div>
+      <div className="bg-white shadow rounded-lg p-6 border border-gray-200">
         <div className="space-y-4">
           <div>
-            <h3 className="font-semibold">Quantity</h3>
-            <p>{item.quantity}</p>
+            <h3 className="font-semibold text-gray-700">Quantity</h3>
+            <p className="text-black">{item.quantity}</p>
           </div>
           <div>
-            <h3 className="font-semibold">Price</h3>
-            <p>${item.price.toFixed(2)}</p>
+            <h3 className="font-semibold text-gray-700">Price</h3>
+            <p className="text-black">${item.price.toFixed(2)}</p>
           </div>
           <div>
-            <h3 className="font-semibold">Category</h3>
-            <p>{item.category}</p>
+            <h3 className="font-semibold text-gray-700">Category</h3>
+            <p className="text-black">{item.category}</p>
           </div>
           <div>
-            <h3 className="font-semibold">Description</h3>
-            <p>{item.description}</p>
+            <h3 className="font-semibold text-gray-700">Description</h3>
+            <p className="text-black">{item.description}</p>
           </div>
         </div>
         <button
           onClick={() => navigate(`/edit/${item._id}`)}
-          className="mt-6 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+          className="mt-6 bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition-colors flex items-center"
         >
+          <Edit size={20} className="mr-2" />
           Edit Item
         </button>
       </div>

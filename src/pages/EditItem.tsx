@@ -4,6 +4,7 @@ import { Item } from "../types";
 import { useInventory } from "../context/InventoryContext";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { ArrowLeft } from "lucide-react";
 
 const EditItem = () => {
   const { id } = useParams<{ id: string }>();
@@ -24,6 +25,7 @@ const EditItem = () => {
     if (id) {
       try {
         await updateItem({ ...data, _id: id });
+        toast.success("Item updated successfully");
         navigate("/");
       } catch (err) {
         toast.error("Failed to update the item. Please try again.");
@@ -37,8 +39,19 @@ const EditItem = () => {
     );
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Edit Item</h1>
+    <div className="max-w-2xl mx-auto mt-8">
+      <h1 className="text-3xl font-bold mb-4 text-center text-black">
+        Edit Item
+      </h1>
+      <div className="mb-6">
+        <button
+          onClick={() => navigate(-1)}
+          className="text-black hover:text-gray-600 flex items-center"
+        >
+          <ArrowLeft size={20} className="mr-2" />
+          Back
+        </button>
+      </div>
       <ItemForm onSubmit={handleSubmit} initialData={item} />
     </div>
   );
