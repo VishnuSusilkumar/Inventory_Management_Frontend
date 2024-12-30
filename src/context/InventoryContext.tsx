@@ -66,7 +66,7 @@ export const InventoryProvider: React.FC<{ children: React.ReactNode }> = ({
       );
       toast.success("Item updated successfully");
     } catch (err: any) {
-      toast.error(err.response.data.error);
+      toast.error(err.response.data.error)
     }
   };
 

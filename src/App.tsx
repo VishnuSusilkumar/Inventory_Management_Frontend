@@ -5,8 +5,9 @@ import AddItem from "./pages/AddItem";
 import EditItem from "./pages/EditItem";
 import ViewItem from "./pages/ViewItem";
 import InventoryList from "./pages/InventoryList";
+import NotFound from "./pages/NotFound";
 import { Toaster } from "sonner";
-import './styles/globals.css';
+import "./styles/globals.css";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
               <Route path="/add" element={<AddItem />} />
               <Route path="/edit/:id" element={<EditItem />} />
               <Route path="/view/:id" element={<ViewItem />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
           <Toaster />
